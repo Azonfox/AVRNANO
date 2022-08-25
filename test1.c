@@ -14,7 +14,7 @@
 #define Led1     PC1     // Cветодиод c1
 #define Led2     PC2     // Cветодиод c2
 
-#define delms 500
+#define delms 200
 
 int main(void){
   DDRB |= (1<<LedBoard)|(1<<LedPWM)|(1<<LedRgbB)|(1<<LedRgbG)|(1<<LedRgbR);     // конфигурируем пин как выход
