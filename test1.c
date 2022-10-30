@@ -1,18 +1,7 @@
 /* arduino nano u1
  * Изучение отладочной платы на atmega328P
  */ 
-#define F_CPU 16000000UL // Указываем тактовую частоту МК
-#include <avr/io.h>      // Подключаем определения ввода/вывода
-#include <util/delay.h> 
-
-#define LedBoard PB5     // Cветодиод сатой платы
-#define LedPWM   PB0     // Cветодиод PWM
-#define LedRgbB  PB1     // Cветодиод Rgb B
-#define LedRgbG  PB2     // Cветодиод Rgb G
-#define LedRgbR  PB3     // Cветодиод Rgb R
-#define Led0     PC0     // Cветодиод c0
-#define Led1     PC1     // Cветодиод c1
-#define Led2     PC2     // Cветодиод c2
+#include <u1.h>      // Подключаем определения ввода/вывода
 
 #define delms 250
 
