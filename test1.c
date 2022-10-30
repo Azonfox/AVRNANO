@@ -3,7 +3,7 @@
  */ 
 #include <u1.h>      // Подключаем определения ввода/вывода
 
-#define delms 250
+#define delms 500
 
 int main(void){
   DDRB |= (1<<LedBoard)|(1<<LedPWM)|(1<<LedRgbB)|(1<<LedRgbG)|(1<<LedRgbR);     // конфигурируем пин как выход

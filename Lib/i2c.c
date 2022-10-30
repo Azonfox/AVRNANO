@@ -1,9 +1,5 @@
 #include "i2c.h"
 
-// На микроконтроллерах серии AVRmega часто (но не всегда) PA4 является
-// сигналом данных (SDA) и PA5 является сигналом тактов (SCL).
-// Стандартная частота тактов 100 кГц, что устанавливается подпрограммой
-// I2C_Init. Тактовая частота I2C зависит от рабочей тактовой частоты AVR.
 #define F_SCL 100000L   // тактовая частота I2C равна 100 кГц
 #define READ 1
 #define TW_START 0xA4   // отправка start condition (TWINT,TWSTA,TWEN)
@@ -24,7 +20,7 @@ void I2C_Init()
    TWBR = ((F_CPU/F_SCL)-16)/2;  // установка частоты SCL
 }
 
-byte I2C_Detect(byte addr)
+uint8_t I2C_Detect(uint8_t addr)
 // Функция ищет slave-устройство по указанному адресу, вернет 1 если
 // устройство найдено, иначе вернет 0.
 {
@@ -36,12 +32,12 @@ byte I2C_Detect(byte addr)
    return (TW_STATUS==0x18);  // вернет 1, если устройство найдено
 }
 
-byte I2C_FindDevice(byte start)
+uint8_t I2C_FindDevice(uint8_t start)
 // Функция возвратит адрес первого найденного устройства, начиная
 // с адреса start. Если ничего не найдено на шине I2C, то вернет 0.
 {
    //Поиск по всем 256 адресам:
-   for (byte addr=start;addr<0xFF;addr++)
+   for (uint8_t addr=start;addr<0xFF;addr++)
    {
       if (I2C_Detect(addr))
          return addr; // возврат, как только что-то найдено
@@ -49,12 +45,12 @@ byte I2C_FindDevice(byte start)
    return 0;          // ничего не найдено, возврат 0.
 }
 
-void I2C_Start (byte slaveAddr)
+void I2C_Start (uint8_t slaveAddr)
 {
    I2C_Detect(slaveAddr);
 }
 
-byte I2C_Write (byte data)
+uint8_t I2C_Write (uint8_t data)
 // Функция посылает байт данных slave-устройству.
 {
    TWDR = data;         // загрузка данных
@@ -63,7 +59,7 @@ byte I2C_Write (byte data)
    return (TW_STATUS!=0x28);
 }
 
-byte I2C_ReadACK ()
+uint8_t I2C_ReadACK ()
 // Функция прочитает байт данных из slave-устройства в блочном режиме.
 {
    TWCR = TW_ACK;       // ack означает, что далее 
@@ -72,7 +68,7 @@ byte I2C_ReadACK ()
    return TWDR;
 }
 
-byte I2C_ReadNACK ()
+uint8_t I2C_ReadNACK ()
 // Функция прочитает байт данных из slave-устройства.
 {
    TWCR = TW_NACK;      // nack означает, что будет прочитан только 1 байт
@@ -80,7 +76,7 @@ byte I2C_ReadNACK ()
    return TWDR;
 }
 
-void I2C_WriteByte(byte busAddr, byte data)
+void I2C_WriteByte(uint8_t busAddr, uint8_t data)
 // Подпрограмма записывает байт в slave-устройство.
 {
    I2C_Start(busAddr);  // отправка адреса шины I2C
@@ -88,7 +84,7 @@ void I2C_WriteByte(byte busAddr, byte data)
    I2C_Stop();
 }
 
-void I2C_WriteRegister(byte busAddr, byte deviceRegister, byte data)
+void I2C_WriteRegister(uint8_t busAddr, uint8_t deviceRegister, uint8_t data)
 // Подпрограмма записывает байт во внутренний регистр slave-устройства.
 {
    I2C_Start(busAddr);        // отправка адреса шины I2C
@@ -97,10 +93,10 @@ void I2C_WriteRegister(byte busAddr, byte deviceRegister, byte data)
    I2C_Stop();
 }
 
-byte I2C_ReadRegister(byte busAddr, byte deviceRegister)
+uint8_t I2C_ReadRegister(uint8_t busAddr, uint8_t deviceRegister)
 // Функция читает байт из внутреннего регистра slave-устройства.
 {
-   byte data = 0;
+   uint8_t data = 0;
    I2C_Start(busAddr);        // отправка адреса шины I2C
    I2C_Write(deviceRegister); // установка указателя на регистр
    I2C_Start(busAddr+READ);   // перезапуск для операции чтения

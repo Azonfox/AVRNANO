@@ -5,15 +5,15 @@
 
 // Prototipes
 void I2C_Init();
-byte I2C_Detect(byte addr);
-byte I2C_FindDevice(byte start);
-void I2C_Start (byte slaveAddr);
-byte I2C_Write (byte data);
-byte I2C_ReadACK ();
-byte I2C_ReadNACK ();
-void I2C_WriteByte(byte busAddr, byte data);
-void I2C_WriteRegister(byte busAddr, byte deviceRegister, byte data);
-byte I2C_ReadRegister(byte busAddr, byte deviceRegister);
+uint8_t I2C_Detect(uint8_t addr);
+uint8_t I2C_FindDevice(uint8_t start);
+void I2C_Start (uint8_t slaveAddr);
+uint8_t I2C_Write (uint8_t data);
+uint8_t I2C_ReadACK ();
+uint8_t I2C_ReadNACK ();
+void I2C_WriteByte(uint8_t busAddr, uint8_t data);
+void I2C_WriteRegister(uint8_t busAddr, uint8_t deviceRegister, uint8_t data);
+uint8_t I2C_ReadRegister(uint8_t busAddr, uint8_t deviceRegister);
 
 
 #endif
