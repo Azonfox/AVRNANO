@@ -6,6 +6,16 @@
 #define delms 500
 
 int main(void){
+
+uint8_t temp;
+ 	I2cInit(100000);
+	I2cStart();
+	I2cWrite(0X55);
+	temp=I2cReadACK();
+	temp=I2cReadNACK();
+	I2cStop();
+
+
   DDRB |= (1<<LedBoard)|(1<<LedPWM)|(1<<LedRgbB)|(1<<LedRgbG)|(1<<LedRgbR);     // конфигурируем пин как выход
   DDRC |= (1<<Led0)|(1<<Led1)|(1<<Led2);
   while (1) 
