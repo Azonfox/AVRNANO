@@ -14,9 +14,15 @@ int main(void){
 	UsartInit(9600); 
  	I2cInit(100000);
 	
-	e24c16Write(0x55);
-	temp=e24c16Read();
-	UsartWrite(temp);
+	e24c16Write(8,0x00); 
+	_delay_ms(100);
+	
+	for (uint8_t i=0; i<0x16;i++){
+		temp=e24c16Read(i);
+		UsartWrite(temp);
+		_delay_ms(10);
+		}
+
 
   DDRB |= (1<<LedBoard)|(1<<LedPWM)|(1<<LedRgbB)|(1<<LedRgbG)|(1<<LedRgbR);     // конфигурируем пин как выход
   DDRC |= (1<<Led0)|(1<<Led1)|(1<<Led2);
