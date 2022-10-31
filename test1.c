@@ -4,42 +4,19 @@
 #include <u1.h>      // Подключаем определения ввода/вывода
 #include "./Lib/usart.h"
 #include "./Lib/i2c.h"
+#include "./Lib/e24c16.h"
 
 #define delms 500
 
 int main(void){
 
-uint8_t temp;
-	// write
+	uint8_t temp;
 	UsartInit(9600); 
  	I2cInit(100000);
 	
-	I2cStart();
-	I2cWrite(0XA0+0); //wrte
-	I2cWrite(0); //adress
-	for(uint8_t i=0; i<16; i++){
-		I2cWrite(0XEE);
-	}
-	I2cStop();
-
-	_delay_ms(100);
-	// read
-	I2cStart();
-	I2cWrite(0XA0+0); //write
-	I2cWrite(0); //adress
-	I2cStart();
-	I2cWrite(0XA0+1); //read
-	for(uint16_t i=0; i<=0xFF; i++){
-		temp=I2cReadACK();
-		UsartWrite(i);
-		UsartWrite(temp);
-
-	}
-	UsartWrite(0);
-	UsartWrite(0);		
-	UsartWrite(0);
-	I2cStop();
-
+	e24c16Write(0x55);
+	temp=e24c16Read();
+	UsartWrite(temp);
 
   DDRB |= (1<<LedBoard)|(1<<LedPWM)|(1<<LedRgbB)|(1<<LedRgbG)|(1<<LedRgbR);     // конфигурируем пин как выход
   DDRC |= (1<<Led0)|(1<<Led1)|(1<<Led2);
