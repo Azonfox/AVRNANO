@@ -10,33 +10,34 @@
 int main(void){
 
 uint8_t temp;
-
+	// write
 	UsartInit(9600); 
  	I2cInit(100000);
 	
 	I2cStart();
-	I2cWrite(0XA0+0); //w
-	I2cWrite(0); //adr1
-//	I2cWrite(0); //adr2
-	for(uint8_t i=0; i<8; i++){
-		I2cWrite(0X33);
+	I2cWrite(0XA0+0); //wrte
+	I2cWrite(0); //adress
+	for(uint8_t i=0; i<16; i++){
+		I2cWrite(0XEE);
 	}
 	I2cStop();
 
-						_delay_ms(600);
-
+	_delay_ms(100);
+	// read
 	I2cStart();
-	I2cWrite(0XA0+0); //w
-	I2cWrite(0); //adr1
-	I2cWrite(0); //adr2
+	I2cWrite(0XA0+0); //write
+	I2cWrite(0); //adress
 	I2cStart();
-	I2cWrite(0XA0+1); //r
-	for(uint8_t i=0; i<20; i++){
+	I2cWrite(0XA0+1); //read
+	for(uint16_t i=0; i<=0xFF; i++){
 		temp=I2cReadACK();
-	//	UsartWrite(i);
+		UsartWrite(i);
 		UsartWrite(temp);
+
 	}
-	temp=I2cReadNACK();
+	UsartWrite(0);
+	UsartWrite(0);		
+	UsartWrite(0);
 	I2cStop();
 
 
