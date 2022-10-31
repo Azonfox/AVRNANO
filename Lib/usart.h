@@ -5,8 +5,8 @@
 
 // Prototipes
 void UsartInit(long int UartSpeed);
-void UsartWrite(unsigned char data);
-unsigned char UsartRead(void);
+void UsartWrite(uint8_t data);
+uint8_t UsartRead(void);
 
 
 #endif

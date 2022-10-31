@@ -2,7 +2,7 @@
 #include "e24c16.h"
 
 // Запись байта
-void e24c16Write(unsigned char data){
+void e24c16Write(uint8_t data){
 	I2cStart();
 	I2cWrite(0XA0+0); //wrte
 	I2cWrite(0); //adress
@@ -11,8 +11,8 @@ void e24c16Write(unsigned char data){
 }
 
 // Чтение байта
-unsigned char e24c16Read(){
-	unsigned char data;
+uint8_t e24c16Read(){
+	uint8_t data;
 	I2cStart();
 	I2cWrite(0XA0+0); //write
 	I2cWrite(0); //adress

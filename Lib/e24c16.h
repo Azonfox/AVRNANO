@@ -4,8 +4,8 @@
 #include <avr/io.h>  // Подключаем определения
 
 // Prototipes
-void e24c16Write(unsigned char data);
-unsigned char e24c16Read();
+void e24c16Write(uint8_t data);
+uint8_t e24c16Read();
 
 
 #endif
