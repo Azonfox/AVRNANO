@@ -14,10 +14,13 @@ int main(void){
 	UsartInit(9600); 
  	I2cInit(100000);
 	
-	e24c16Write(8,0x00); 
-	_delay_ms(100);
+	for (uint16_t i=0; i<2048;i++){
+		e24c16Write(i,(uint8_t)(i&0xFF)); 
+		_delay_ms(10);
+	}
 	
-	for (uint8_t i=0; i<0x16;i++){
+	_delay_ms(100);
+	for (uint16_t i=0; i<2048;i++){
 		temp=e24c16Read(i);
 		UsartWrite(temp);
 		_delay_ms(10);
