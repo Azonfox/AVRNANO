@@ -5,14 +5,16 @@ OBJCOPY=avr-objcopy
 CFLAGS=-std=c99 -Wall -g -Os -mmcu=${MCU} -DF_CPU=${F_CPU} -I.
 TARGET=main
 SRCS=main.c 
-usbport=/dev/ttyUSB0
+#usbport=/dev/ttyUSB0
+usbport=/dev/tty.usbserial-640
 
 all:
 	${CC} ${CFLAGS} -o ${TARGET}.bin  ${SRCS}
 	#${CC} -mmcu=${MCU} -Wl,-Map=main.map  ---- error
 	${OBJCOPY} -j .text -j .data -O ihex ${TARGET}.bin ${TARGET}.hex
 	avr-objdump -h -S ${TARGET}.bin > ${TARGET}.lst
-	avr-size -C --mcu=${MCU} ${TARGET}.bin
+	avr-size ${TARGET}.bin      # For MacBook
+	#Linux	avr-size -C --mcu=${MCU} ${TARGET}.bin
 
 upload:
 	avrdude -v -p ${MCU}    -carduino -P ${usbport}   -b57600 -D -Uflash:w:${TARGET}.hex:i

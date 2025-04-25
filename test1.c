@@ -6,7 +6,7 @@
 #include "./Lib/i2c.h"
 #include "./Lib/e24c16.h"
 
-#define delms 500
+#define delms 50
 
 int main(void){
 
